@@ -19,10 +19,12 @@
 #include "main.h"
 #include "pwm_button_blinky.h"
 
-uint8_t mode = 1; // Initialize LED duty cycle mode
+uint8_t mode_global = 1; // Initialize LED duty cycle mode
 
 void blinky() {
+	uint8_t mode;
 	while (1) {
+		mode = mode_global; // Check the global mode
 		if (mode == 1) // 0% duty
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 		else if (mode == 2) { // 20% duty
@@ -55,10 +57,9 @@ void blinky() {
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == GPIO_PIN_13) { // Button press interrupt
-		if (mode != 6) // If not max duty
-			mode++; // Increase duty mode
+		if (mode_global != 6) // If not max duty
+			mode_global++; // Increase duty mode
 		else
-			mode = 1; // Else go back to mode 0
+			mode_global = 1; // Else go back to mode 1
 	}
 }
-
