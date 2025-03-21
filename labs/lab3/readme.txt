@@ -26,6 +26,7 @@ and get the same results. Describe the conditions under which you made your meas
 any necessary configuration of the hardware or software environment. Draw schematics when necessary.
 Document the toolchain switches, etc.  Try to automate the gathering of measurements as much as possible.
     Using the 14.2.1 toolchain and the internal oscillator with a 64MHz main clock in CubeIDE.
+    With no optimization -O0.
 
 4 What To Submit
 Push all your code to your git repository. Provide a readme file which talks about what you did, any issues
