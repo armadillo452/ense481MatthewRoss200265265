@@ -740,6 +740,7 @@ void StartHeartbeat(void *argument)
 {
   /* USER CODE BEGIN StartHeartbeat */
 	uint32_t uptime;
+	status(); // Clear all and draw status window
 	/* Infinite loop */
 	for (;;) {
 		if (osMessageQueueGet(uptimeHandle, &uptime, NULL, osWaitForever)
@@ -762,7 +763,7 @@ void StartEpaperPrint(void *argument)
   /* USER CODE BEGIN StartEpaperPrint */
 //	osDelay(100);
 	char displayBuffer[64]; // Buffer for formatted output to epaper
-	epaper_status(); // Clear and init the epaper
+	epaper_start(); // Clear and init the epaper
 	/* Infinite loop */
 	for (;;) {
 		if (osMessageQueueGet(EpaperStatusHandle, displayBuffer, NULL,

@@ -8,17 +8,26 @@
 
 uint8_t image_bw[EPD_W_BUFF_SIZE * EPD_H];
 
-void epaper_status(void) {
-	// init and clear screen
-	epd_init();
+void epaper_start() {
+	epd_init(); // main init
+	epaper_clear_initial();
+	epd_init_partial(); // init partial update mode
+	epaper_status();
+}
+
+void epaper_clear_initial() {
 	epd_paint_newimage(image_bw, EPD_W, EPD_H, EPD_ROTATE_180, EPD_COLOR_WHITE);
 	epd_paint_selectimage(image_bw);
 	epd_paint_clear(EPD_COLOR_WHITE);
 	epd_displayBW(image_bw);
+}
 
-	epd_init_partial(); // init partial update mode
+void epaper_clear_refresh() {
+	epaper_clear_initial();
+	epaper_status();
+}
 
-	// status
+void epaper_status(void) {
 	epd_paint_showString(0, 0,
 			(uint8_t*) "       - Frynet by Cyberdining Systems -",
 			EPD_FONT_SIZE8x6, EPD_COLOR_BLACK);

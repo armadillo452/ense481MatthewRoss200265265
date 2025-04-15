@@ -7,6 +7,7 @@
 #include "MAX6675.h"    // thermocouple
 #include "epaper_ctl.h" // epaper
 #include "epaper.h"     // epaper
+#include "git_version.h"// git commit hash
 
 extern osMessageQueueId_t UARToutHandle;
 extern osMessageQueueId_t EpaperStatusHandle;
@@ -64,7 +65,10 @@ void execute(uint8_t char_count, uint8_t command[]) { // Execute command
 		status();
 	else if (strncmp((const char*) command, "clse", char_count) == 0
 			&& char_count == sizeof("clse") - 1)
-		epaper_status();
+		epaper_clear_refresh();
+	else if (strncmp((const char*) command, "gitver", char_count) == 0
+				&& char_count == sizeof("gitver") - 1)
+		myprintf("Git Version: %s\n\r", GIT_VERSION);
 	else if (char_count > 0)
 		myprintf("  Invalid command\n\r");
 }
@@ -108,7 +112,6 @@ void heartbeat(uint32_t uptime) { // Print the heartbeat data
 
 	// Hotplate control
 	if (target > getMAX6675()) {
-//		myprintf("heater on!\r\n>> ");
 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3,
 				(htim3.Init.Period * 1) /  30); // 3.25% duty
 		HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
@@ -127,6 +130,7 @@ void status() {
 	myprintf("| Heat :                                     |\n\r");
 	myprintf("+--------------------------------------------+\n\r");
 	myprintf("\x1b[7;r\x1b[7;0H"); // Scroll keep top 5 lines")
+	myprintf(">> ");
 }
 
 // Print help
@@ -134,4 +138,5 @@ void help(void) { // Usage help instructions
 	myprintf("  The case-sensitive usage commands are:\n\r");
 	myprintf("    cls       - clear screen\n\r");
 	myprintf("    clse      - clear epaper\n\r");
+	myprintf("    gitver    - print git commit hash\n\r");
 }
