@@ -1,21 +1,27 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ * @file main.c
+ * @brief Main entry point and application control.
+ *
+ * This file serves as the primary entry point for the application. It is responsible for:
+ * - Initializing hardware and peripherals (e.g., UART, ADC, timers, GPIOs).
+ * - Setting up the operating system (e.g., thread creation, message queues, semaphores).
+ * - Providing callbacks for hardware interrupts and timer events.
+ * - Launching the main application loops and managing system tasks such as heartbeat,
+ *   e-paper display updates, and UART communication.
+ *
+ * The application is developed for an STM32 microcontroller using CubeIDE. It integrates
+ * multiple modules, including CLI for user interaction, ADC for sensor readings, e-paper display
+ * for output, and a simple neural control for managing heater duty cycles.
+ *
+ * @note Ensure that all peripheral initializations and system tasks are appropriately
+ *       configured before entering the main loop.
+ *
+ * @author Matthew Ross 200265265
+ *
+ * @version 1.0
+ * @date    17apr2025
+ */
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/

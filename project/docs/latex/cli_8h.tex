@@ -1,0 +1,136 @@
+\doxysection{/home/user/\+Desktop/ense481\+Matthew\+Ross200265265/project/hotplate\+\_\+final/\+Core/\+Inc/cli.h File Reference}
+\hypertarget{cli_8h}{}\label{cli_8h}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/cli.h@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/cli.h}}
+
+
+Contains declarations for CLI-\/related functions.  
+
+
+{\ttfamily \#include "{}stdint.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{cli_8h_a0ff2e200a2a6ec6c39f60ddbfd905c15}{myprintf}} (const char \texorpdfstring{$\ast$}{*}fmt,...)
+\begin{DoxyCompactList}\small\item\em Custom formatted output function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cli_8h_a9f51d65ac5846228cc9a5a0a7cd8c58c}{console\+\_\+\+UART}} (uint8\+\_\+t input\+\_\+console)
+\begin{DoxyCompactList}\small\item\em Processes a single console input via UART. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cli_8h_a99bc5e855f995f1e39d0bffb4b7e8bca}{execute}} (uint8\+\_\+t char\+\_\+count, uint8\+\_\+t command\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Executes a command received from the console. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cli_8h_aeac76a189b104bafb23e5e1b64a28ec4}{heartbeat}} (void)
+\begin{DoxyCompactList}\small\item\em Performs periodic system heartbeat operations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cli_8h_a685506d2c432425b89581f85cf876f22}{status}} (void)
+\begin{DoxyCompactList}\small\item\em Displays the framework for current system status. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cli_8h_a0bed8474bd33a912769360766f6b10d4}{help}} (void)
+\begin{DoxyCompactList}\small\item\em Displays help and usage information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains declarations for CLI-\/related functions. 
+
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyNote}{Note}
+Hardware connections\+:
+\begin{DoxyItemize}
+\item {\bfseries{SSR\+:}} GPIO (PB0)
+\item {\bfseries{GND\+:}} Ground
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{cli_8h_a9f51d65ac5846228cc9a5a0a7cd8c58c}\index{cli.h@{cli.h}!console\_UART@{console\_UART}}
+\index{console\_UART@{console\_UART}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{console\_UART()}{console\_UART()}}
+{\footnotesize\ttfamily \label{cli_8h_a9f51d65ac5846228cc9a5a0a7cd8c58c} 
+void console\+\_\+\+UART (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{input\+\_\+console}{}\end{DoxyParamCaption})}
+
+
+
+Processes a single console input via UART. 
+
+This function takes one byte of input received from the console and processes it accordingly. The processing includes buffering the input, echoing it back, and interpreting it as part of a command sequence.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+console} & The byte of input received from the console. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cli_8h_a99bc5e855f995f1e39d0bffb4b7e8bca}\index{cli.h@{cli.h}!execute@{execute}}
+\index{execute@{execute}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{cli_8h_a99bc5e855f995f1e39d0bffb4b7e8bca} 
+void execute (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{char\+\_\+count}{, }\item[{uint8\+\_\+t}]{command}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Executes a command received from the console. 
+
+This function parses and executes a command represented by an array of bytes. The number of valid characters in the command is specified by char\+\_\+count.
+
+
+\begin{DoxyParams}{Parameters}
+{\em char\+\_\+count} & The number of characters in the command. \\
+\hline
+{\em command} & The array containing the command data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cli_8h_aeac76a189b104bafb23e5e1b64a28ec4}\index{cli.h@{cli.h}!heartbeat@{heartbeat}}
+\index{heartbeat@{heartbeat}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{heartbeat()}{heartbeat()}}
+{\footnotesize\ttfamily \label{cli_8h_aeac76a189b104bafb23e5e1b64a28ec4} 
+void heartbeat (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Performs periodic system heartbeat operations. 
+
+This function is intended to be called periodically to perform routine tasks such as refreshing watchdog timer, updating system status, and triggering other time-\/critical processes. \Hypertarget{cli_8h_a0bed8474bd33a912769360766f6b10d4}\index{cli.h@{cli.h}!help@{help}}
+\index{help@{help}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{help()}{help()}}
+{\footnotesize\ttfamily \label{cli_8h_a0bed8474bd33a912769360766f6b10d4} 
+void help (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Displays help and usage information. 
+
+This function prints a list of available commands or general usage information to assist the user in understanding how to interact with the system. \Hypertarget{cli_8h_a0ff2e200a2a6ec6c39f60ddbfd905c15}\index{cli.h@{cli.h}!myprintf@{myprintf}}
+\index{myprintf@{myprintf}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{myprintf()}{myprintf()}}
+{\footnotesize\ttfamily \label{cli_8h_a0ff2e200a2a6ec6c39f60ddbfd905c15} 
+void myprintf (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
+
+
+
+Custom formatted output function. 
+
+This function works similarly to the standard printf(), sending the formatted output to a designated output channel (for example, a debug console). It supports a variable number of arguments according to the format string provided.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format string that specifies how subsequent arguments are converted for output. \\
+\hline
+{\em ...} & A variable list of arguments to be formatted and output.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Use this function for debugging and logging purposes. Ensure that the format string and arguments are correctly matched to avoid runtime errors. 
+\end{DoxyNote}
+\Hypertarget{cli_8h_a685506d2c432425b89581f85cf876f22}\index{cli.h@{cli.h}!status@{status}}
+\index{status@{status}!cli.h@{cli.h}}
+\doxysubsubsection{\texorpdfstring{status()}{status()}}
+{\footnotesize\ttfamily \label{cli_8h_a685506d2c432425b89581f85cf876f22} 
+void status (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Displays the framework for current system status. 
+
+This function displays various system status information, which can be useful for debugging or monitoring purposes. 

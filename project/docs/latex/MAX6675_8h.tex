@@ -1,0 +1,57 @@
+\doxysection{/home/user/\+Desktop/ense481\+Matthew\+Ross200265265/project/hotplate\+\_\+final/\+Core/\+Inc/\+MAX6675.h File Reference}
+\hypertarget{MAX6675_8h}{}\label{MAX6675_8h}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/MAX6675.h@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/MAX6675.h}}
+
+
+Interface for the MAX6675 thermocouple-\/to-\/digital converter.  
+
+
+{\ttfamily \#include "{}stdint.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{MAX6675_8h_a11c6b13e4aea6c562160989a8e549d3a}{get\+MAX6675}} (void)
+\begin{DoxyCompactList}\small\item\em Reads the temperature from the MAX6675 thermocouple interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interface for the MAX6675 thermocouple-\/to-\/digital converter. 
+
+This module provides a function to retrieve temperature measurements from the MAX6675 thermocouple-\/to-\/digital converter using SPI communication.
+
+\begin{DoxyNote}{Note}
+Hardware connections\+:
+\begin{DoxyItemize}
+\item {\bfseries{VCC\+:}} 3.\+3V or 5V
+\item {\bfseries{GND\+:}} Ground
+\item {\bfseries{SCK\+:}} SPI1\+\_\+\+SCK (PA5)
+\item {\bfseries{CS\+:}} GPIO (PA9)
+\item {\bfseries{SO\+:}} SPI1\+\_\+\+MISO (PA6)
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{MAX6675_8h_a11c6b13e4aea6c562160989a8e549d3a}\index{MAX6675.h@{MAX6675.h}!getMAX6675@{getMAX6675}}
+\index{getMAX6675@{getMAX6675}!MAX6675.h@{MAX6675.h}}
+\doxysubsubsection{\texorpdfstring{getMAX6675()}{getMAX6675()}}
+{\footnotesize\ttfamily \label{MAX6675_8h_a11c6b13e4aea6c562160989a8e549d3a} 
+float get\+MAX6675 (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Reads the temperature from the MAX6675 thermocouple interface. 
+
+This function initiates SPI communication with the MAX6675 by pulling the CS line low, receives two bytes of data from the device, processes the data by shifting out unused bits, and then converts the raw value to a temperature in degrees Celsius using the scaling factor (0.\+25°C per count).
+
+\begin{DoxyReturn}{Returns}
+Temperature in degrees Celsius. 
+\end{DoxyReturn}

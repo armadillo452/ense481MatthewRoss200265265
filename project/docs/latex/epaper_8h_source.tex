@@ -1,0 +1,118 @@
+\doxysection{epaper.\+h}
+\hypertarget{epaper_8h_source}{}\label{epaper_8h_source}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/epaper.h@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/epaper.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_EPAPER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_EPAPER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00005\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\#include\ "{}gd32f10x.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}stm32f1xx.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\#define\ EPD\_42}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ EPD\_29}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\#define\ EPD\_213}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\#define\ EPD\_154}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#if\ (!defined\ EPD\_29)\ \&\&\ (!defined\ EPD\_213)\ \&\&\ (!defined\ EPD\_154)\ \&\&\ (!defined\ EPD\_42)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#error\ EPD\ Type\ Undefine}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#ifdef\ EPD\_29}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ EPD\_W\ 128}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ EPD\_H\ 296}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#ifdef\ EPD\_213}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ EPD\_W\ 122}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ EPD\_H\ 250}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifdef\ EPD\_154}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ EPD\_W\ 200}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ EPD\_H\ 200}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#ifdef\ EPD\_42}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ EPD\_W\ 400}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ EPD\_H\ 300}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ EPD\_OK\ 0}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ EPD\_ERROR\ 1}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ EPD\_ROTATE\_0\ 0}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ EPD\_ROTATE\_90\ 90}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ EPD\_ROTATE\_180\ 180}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ EPD\_ROTATE\_270\ 270}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ EPD\_COLOR\_WHITE\ 0xFF}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ EPD\_COLOR\_BLACK\ 0x00}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ EPD\_COLOR\_RED\ EPD\_COLOR\_BLACK}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ EPD\_FONT\_SIZE8x6\ (8)}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ EPD\_FONT\_SIZE12x6\ (12)}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ EPD\_FONT\_SIZE16x8\ (16)}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ EPD\_FONT\_SIZE24x12\ (24)}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ EPD\_DEEPSLEEP\_MODE1\ (0x01)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ EPD\_DEEPSLEEP\_MODE2\ (0x03)}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ EPD\_W\_BUFF\_SIZE\ ((EPD\_W\ \%\ 8\ ==\ 0)\ ?\ (EPD\_W\ /\ 8)\ :\ (EPD\_W\ /\ 8\ +\ 1))}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00063\ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ uint8\_t\ *Image;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ uint16\_t\ Width;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ uint16\_t\ Height;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ uint16\_t\ WidthMemory;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ uint16\_t\ HeightMemory;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ uint16\_t\ Color;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ uint16\_t\ Rotate;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ uint16\_t\ WidthByte;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ uint16\_t\ HeightByte;}
+\DoxyCodeLine{00073\ \ \ \ \ \}\ \mbox{\hyperlink{structEPD__PAINT}{EPD\_PAINT}};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structEPD__PAINT}{EPD\_PAINT}}\ EPD\_Paint;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ uint8\_t\ epd\_wait\_busy(\textcolor{keywordtype}{void});\ \textcolor{comment}{//\ Pulled\ out\ this\ gem}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_io\_init(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00079\ \ \ \ \ uint8\_t\ epd\_init(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00080\ \ \ \ \ uint8\_t\ epd\_init\_partial(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_enter\_deepsleepmode(uint8\_t\ mode);}
+\DoxyCodeLine{00082\ \ \ \ \ uint8\_t\ epd\_power\_on(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00083\ \ \ \ \ uint8\_t\ epd\_power\_off(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_init\_internalTempSensor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_update(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_update\_partial(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_address\_set(uint16\_t\ x\_start,uint16\_t\ y\_start,uint16\_t\ x\_end,uint16\_t\ y\_end);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_setpos(uint16\_t\ x,\ uint16\_t\ y);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_display(uint8\_t\ *Image1,\ uint8\_t\ *Image2);}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_displayBW(uint8\_t\ *Image);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_displayBW\_partial(uint8\_t\ *Image);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_displayRED(uint8\_t\ *Image);}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_newimage(uint8\_t\ *image,\ uint16\_t\ Width,\ uint16\_t\ Height,\ uint16\_t\ Rotate,\ uint16\_t\ Color);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_setpixel(uint16\_t\ Xpoint,\ uint16\_t\ Ypoint,\ uint16\_t\ Color);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_selectimage(uint8\_t\ *image);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_clear(uint16\_t\ color);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_drawPoint(uint16\_t\ Xpoint,\ uint16\_t\ Ypoint,\ uint16\_t\ Color);}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_drawLine(uint16\_t\ Xstart,\ uint16\_t\ Ystart,\ uint16\_t\ Xend,\ uint16\_t\ Yend,\ uint16\_t\ Color);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_drawRectangle(uint16\_t\ Xstart,\ uint16\_t\ Ystart,\ uint16\_t\ Xend,\ uint16\_t\ Yend,\ uint16\_t\ Color,\ uint8\_t\ mode);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_drawCircle(uint16\_t\ X\_Center,\ uint16\_t\ Y\_Center,\ uint16\_t\ Radius,\ uint16\_t\ Color,\ uint8\_t\ mode);}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_showChar(uint16\_t\ x,\ uint16\_t\ y,\ uint16\_t\ chr,\ uint16\_t\ size1,\ uint16\_t\ color);}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_showString(uint16\_t\ x,\ uint16\_t\ y,\ uint8\_t\ *chr,\ uint16\_t\ size1,\ uint16\_t\ color);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_showNum(uint16\_t\ x,\ uint16\_t\ y,\ uint32\_t\ num,\ uint16\_t\ len,\ uint16\_t\ size1,\ uint16\_t\ color);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_showChinese(uint16\_t\ x,\ uint16\_t\ y,\ uint16\_t\ num,\ uint16\_t\ size1,\ uint16\_t\ color);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ epd\_paint\_showPicture(uint16\_t\ x,\ uint16\_t\ y,\ uint16\_t\ sizex,\ uint16\_t\ sizey,\ \textcolor{keyword}{const}\ uint8\_t\ BMP[],\ uint16\_t\ Color);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

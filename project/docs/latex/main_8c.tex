@@ -1,0 +1,543 @@
+\doxysection{/home/user/\+Desktop/ense481\+Matthew\+Ross200265265/project/hotplate\+\_\+final/\+Core/\+Src/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Src/main.c@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Src/main.c}}
+
+
+Main entry point and application control.  
+
+
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}cmsis\+\_\+os.\+h"{}}\newline
+{\ttfamily \#include "{}cli.\+h"{}}\newline
+{\ttfamily \#include "{}string.\+h"{}}\newline
+{\ttfamily \#include "{}epaper.\+h"{}}\newline
+{\ttfamily \#include "{}epaper\+\_\+ctl.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a56c882bdde0e51d3be5516683df5e2e7}{Start\+UARTprint}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Thread function for UART print. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a7b45ef46d3923795161a39be3be2593d}{Start\+UARTinput}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Thread function for UART input. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ac012df5e73b7882124fbe6a21e3313f3}{Start\+Heartbeat}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Thread function for system heartbeat. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a7f4c4262645a987275ead887dd68e2af}{Start\+Epaper\+Print}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Thread function for updating the e-\/paper display. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em The application entry point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ae494a9643f29b87d6d81e5264e60e57b}{HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback}} (UART\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}huart)
+\begin{DoxyCompactList}\small\item\em UART Reception Complete Callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}{HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback}} (uint16\+\_\+t GPIO\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em GPIO EXTI (External Interrupt) Callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}{HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}htim)
+\begin{DoxyCompactList}\small\item\em Timer period elapsed callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8c_a22b804736f5648d52f639b2647d4ed13}\label{main_8c_a22b804736f5648d52f639b2647d4ed13} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
+\item 
+\Hypertarget{main_8c_a80f055e38f52ca3c57e183fc685ea477}\label{main_8c_a80f055e38f52ca3c57e183fc685ea477} 
+IWDG\+\_\+\+Handle\+Type\+Def {\bfseries hiwdg}
+\item 
+\Hypertarget{main_8c_a9c6222bae4d0328dd843ae099623b40b}\label{main_8c_a9c6222bae4d0328dd843ae099623b40b} 
+SPI\+\_\+\+Handle\+Type\+Def {\bfseries hspi1}
+\item 
+\Hypertarget{main_8c_ab9da65f935e805137e2eb4e18c5ab224}\label{main_8c_ab9da65f935e805137e2eb4e18c5ab224} 
+SPI\+\_\+\+Handle\+Type\+Def {\bfseries hspi2}
+\item 
+\Hypertarget{main_8c_a2c80fd5510e2990a59a5c90d745c716c}\label{main_8c_a2c80fd5510e2990a59a5c90d745c716c} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim2}
+\item 
+\Hypertarget{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62}\label{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim3}
+\item 
+\Hypertarget{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{main_8c_aa9479c261d65eecedd3d9582f7f0f89c} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart2}
+\item 
+\Hypertarget{main_8c_ab5d9cb9d76828621c36f251b277d4e6a}\label{main_8c_ab5d9cb9d76828621c36f251b277d4e6a} 
+os\+Thread\+Id\+\_\+t {\bfseries UARTprint\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a0dbad06ad7948e0d6d85545c6602b091}{UARTprint\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_aa9d55b3cdc6863f893ff2926e18d3684}\label{main_8c_aa9d55b3cdc6863f893ff2926e18d3684} 
+os\+Thread\+Id\+\_\+t {\bfseries UARTinput\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_af4710774e4990fa034f5cf88781405cf}{UARTinput\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_af248549c4b22695493fa210019816876}\label{main_8c_af248549c4b22695493fa210019816876} 
+os\+Thread\+Id\+\_\+t {\bfseries Heartbeat\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_ab472a0977b92a7f30ba53a7837d35750}{Heartbeat\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_ae7c390b065ca746c2e177cb66205c798}\label{main_8c_ae7c390b065ca746c2e177cb66205c798} 
+os\+Thread\+Id\+\_\+t {\bfseries Epaper\+Print\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a950050654f827009fc061484b2a4f156}{Epaper\+Print\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_ad435138679a3b9c025f69bfab4e57268}\label{main_8c_ad435138679a3b9c025f69bfab4e57268} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries UARTin\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_ace743ecc08f32d2c0021095789a79865}{UARTin\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_a7fc412c005bc11c718ceaac44bd94e6d}\label{main_8c_a7fc412c005bc11c718ceaac44bd94e6d} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries UARTout\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a784289f8ae7e5f4c9f97fe774568a0ba}{UARTout\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_a1219169275936c9f13d0a72e586eb9d0}\label{main_8c_a1219169275936c9f13d0a72e586eb9d0} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries uptime\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_afe91bcf3d393740fb06dc07d99ef2a2a}{uptime\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_ac85665acee86641c4342f6f55b219148}\label{main_8c_ac85665acee86641c4342f6f55b219148} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries Epaper\+Status\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_acec6f5934d6b412b443238acbf35dca5}{Epaper\+Status\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_adf140693ac08e31a18adb28e893a1c7a}\label{main_8c_adf140693ac08e31a18adb28e893a1c7a} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries Epaper\+Status2\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a2bc3c3b713d64a2db2aac34b83c153e3}{Epaper\+Status2\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_ad773c7a535d126c8a4df82a7dc85f36c}\label{main_8c_ad773c7a535d126c8a4df82a7dc85f36c} 
+os\+Message\+Queue\+Id\+\_\+t {\bfseries Epaper\+Status3\+Handle}
+\item 
+const os\+Message\+Queue\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a300ac6eac54c89a5eddb561c2fef45d4}{Epaper\+Status3\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_a35d307cbfa8b67656e9faa8ccb23972e}\label{main_8c_a35d307cbfa8b67656e9faa8ccb23972e} 
+os\+Semaphore\+Id\+\_\+t {\bfseries console\+Handle}
+\item 
+const os\+Semaphore\+Attr\+\_\+t \mbox{\hyperlink{main_8c_ab9a20a076e598f1ad6eb2980f973f9ec}{console\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_a2475c78015c7393c1c9939ab5a57ad9f}\label{main_8c_a2475c78015c7393c1c9939ab5a57ad9f} 
+uint8\+\_\+t {\bfseries input}
+\item 
+\Hypertarget{main_8c_a76645f5f89a6b9b5d6593a2cc0d828b0}\label{main_8c_a76645f5f89a6b9b5d6593a2cc0d828b0} 
+uint8\+\_\+t {\bfseries uptime} = 0
+\item 
+\Hypertarget{main_8c_a7acca8be0094a19be6e308ac05924c4f}\label{main_8c_a7acca8be0094a19be6e308ac05924c4f} 
+uint8\+\_\+t {\bfseries minutes} = 0
+\item 
+\Hypertarget{main_8c_a00a531a34a1d603329df5778f1203ab6}\label{main_8c_a00a531a34a1d603329df5778f1203ab6} 
+uint8\+\_\+t {\bfseries hours} = 0
+\item 
+\Hypertarget{main_8c_a08657383dea395d1fa1699117297015f}\label{main_8c_a08657383dea395d1fa1699117297015f} 
+uint16\+\_\+t {\bfseries days} = 0
+\item 
+\Hypertarget{main_8c_a5f333beb3be5b82c1e091308136aeb7d}\label{main_8c_a5f333beb3be5b82c1e091308136aeb7d} 
+uint8\+\_\+t {\bfseries target} = 0
+\item 
+\Hypertarget{main_8c_a82bc16380836be1c06e404db4198ecdb}\label{main_8c_a82bc16380836be1c06e404db4198ecdb} 
+uint8\+\_\+t {\bfseries image\+\_\+bw} \mbox{[}EPD\+\_\+\+W\+\_\+\+BUFF\+\_\+\+SIZE \texorpdfstring{$\ast$}{*}EPD\+\_\+H\mbox{]}
+\item 
+\Hypertarget{main_8c_aba5953f78ee2c44323e384fe2d842b4f}\label{main_8c_aba5953f78ee2c44323e384fe2d842b4f} 
+uint8\+\_\+t {\bfseries clear\+Paper}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main entry point and application control. 
+
+This file serves as the primary entry point for the application. It is responsible for\+:
+\begin{DoxyItemize}
+\item Initializing hardware and peripherals (e.\+g., UART, ADC, timers, GPIOs).
+\item Setting up the operating system (e.\+g., thread creation, message queues, semaphores).
+\item Providing callbacks for hardware interrupts and timer events.
+\item Launching the main application loops and managing system tasks such as heartbeat, e-\/paper display updates, and UART communication.
+\end{DoxyItemize}
+
+The application is developed for an STM32 microcontroller using Cube\+IDE. It integrates multiple modules, including CLI for user interaction, ADC for sensor readings, e-\/paper display for output, and a simple neural control for managing heater duty cycles.
+
+\begin{DoxyNote}{Note}
+Ensure that all peripheral initializations and system tasks are appropriately configured before entering the main loop.
+\end{DoxyNote}
+Hardware connections\+:
+\begin{DoxyItemize}
+\item {\bfseries{Left Button\+:}} GPIO (PA4)
+\item {\bfseries{Right Button\+:}} GPIO (PA1)
+\item {\bfseries{GND\+:}} Ground
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025
+\end{DoxyDate}
+This file serves as the primary entry point for the application. It is responsible for\+:
+\begin{DoxyItemize}
+\item Initializing hardware and peripherals (e.\+g., UART, ADC, timers, GPIOs).
+\item Setting up the operating system (e.\+g., thread creation, message queues, semaphores).
+\item Providing callbacks for hardware interrupts and timer events.
+\item Launching the main application loops and managing system tasks such as heartbeat, e-\/paper display updates, and UART communication.
+\end{DoxyItemize}
+
+The application is developed for an STM32 microcontroller using Cube\+IDE. It integrates multiple modules, including CLI for user interaction, ADC for sensor readings, e-\/paper display for output, and a simple neural control for managing heater duty cycles.
+
+\begin{DoxyNote}{Note}
+Ensure that all peripheral initializations and system tasks are appropriately configured before entering the main loop.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a1730ffe1e560465665eb47d9264826f9}\index{main.c@{main.c}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily \label{main_8c_a1730ffe1e560465665eb47d9264826f9} 
+void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}\index{main.c@{main.c}!HAL\_GPIO\_EXTI\_Callback@{HAL\_GPIO\_EXTI\_Callback}}
+\index{HAL\_GPIO\_EXTI\_Callback@{HAL\_GPIO\_EXTI\_Callback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_GPIO\_EXTI\_Callback()}{HAL\_GPIO\_EXTI\_Callback()}}
+{\footnotesize\ttfamily \label{main_8c_a0cd91fd3a9608559c2a87a8ba6cba55f} 
+void HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{GPIO\+\_\+\+Pin}{}\end{DoxyParamCaption})}
+
+
+
+GPIO EXTI (External Interrupt) Callback. 
+
+This callback is triggered when an external GPIO interrupt occurs. This example uses interrupts on specific pins to adjust a target value. If the interrupt is from GPIO\+\_\+\+PIN\+\_\+1 the target is increased by 10°C. Conversely, for GPIO\+\_\+\+PIN\+\_\+4, the target is decreased by 10°C.
+
+
+\begin{DoxyParams}{Parameters}
+{\em GPIO\+\_\+\+Pin} & The pin number that generated the interrupt. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}\index{main.c@{main.c}!HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}}
+\index{HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_PeriodElapsedCallback()}{HAL\_TIM\_PeriodElapsedCallback()}}
+{\footnotesize\ttfamily \label{main_8c_a8a3b0ad512a6e6c6157440b68d395eac} 
+void HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{htim}{}\end{DoxyParamCaption})}
+
+
+
+Timer period elapsed callback. 
+
+This callback is invoked by the HAL when a timer period elapses. When TIM1 generates an interrupt, the system tick is incremented via HAL\+\_\+\+Inc\+Tick(). Additionally, when TIM2 generates an interrupt, the uptime counter is incremented, and time-\/related variables (uptime, minutes, hours, days) are updated accordingly. Finally, the updated uptime is sent to a message queue for further processing.
+
+
+\begin{DoxyParams}{Parameters}
+{\em htim} & Pointer to the TIM handle structure. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_ae494a9643f29b87d6d81e5264e60e57b}\index{main.c@{main.c}!HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}}
+\index{HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_UART\_RxCpltCallback()}{HAL\_UART\_RxCpltCallback()}}
+{\footnotesize\ttfamily \label{main_8c_ae494a9643f29b87d6d81e5264e60e57b} 
+void HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback (\begin{DoxyParamCaption}\item[{UART\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{huart}{}\end{DoxyParamCaption})}
+
+
+
+UART Reception Complete Callback. 
+
+This callback is invoked by the HAL when a complete UART reception interrupt occurs. When the function is called with a UART handle corresponding to USART2, it places the received character (stored in a global variable, e.\+g. {\ttfamily input}) into the UART input message queue, then reinitiates the UART reception interrupt.
+
+
+\begin{DoxyParams}{Parameters}
+{\em huart} & Pointer to the UART handle structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+The application entry point. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a7f4c4262645a987275ead887dd68e2af}\index{main.c@{main.c}!StartEpaperPrint@{StartEpaperPrint}}
+\index{StartEpaperPrint@{StartEpaperPrint}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartEpaperPrint()}{StartEpaperPrint()}}
+{\footnotesize\ttfamily \label{main_8c_a7f4c4262645a987275ead887dd68e2af} 
+void Start\+Epaper\+Print (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Thread function for updating the e-\/paper display. 
+
+This function implements the Epaper\+Print thread. It first checks whether the e-\/paper needs to be cleared (using the flag {\ttfamily clear\+Paper}) and initializes it if required. Then, it waits for status messages from three separate message queues to update different sections of the e-\/paper. After updating the image buffer, it issues a partial update command so that only changed content is redrawn.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_ac012df5e73b7882124fbe6a21e3313f3}\index{main.c@{main.c}!StartHeartbeat@{StartHeartbeat}}
+\index{StartHeartbeat@{StartHeartbeat}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartHeartbeat()}{StartHeartbeat()}}
+{\footnotesize\ttfamily \label{main_8c_ac012df5e73b7882124fbe6a21e3313f3} 
+void Start\+Heartbeat (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Thread function for system heartbeat. 
+
+This function implements the Heartbeat thread. On startup, it acquires a semaphore to safely update and display the system status. It then starts the PWM for controlling the hotplate output. Inside the main loop, it waits for an uptime value from a message queue and calls the heartbeat() function to update the system’s heartbeat routine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a7b45ef46d3923795161a39be3be2593d}\index{main.c@{main.c}!StartUARTinput@{StartUARTinput}}
+\index{StartUARTinput@{StartUARTinput}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartUARTinput()}{StartUARTinput()}}
+{\footnotesize\ttfamily \label{main_8c_a7b45ef46d3923795161a39be3be2593d} 
+void Start\+UARTinput (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Thread function for UART input. 
+
+This function implements the UARTinput thread. It continuously waits for a received character from the UART input message queue and then passes that character to the console\+\_\+\+UART() function for processing.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a56c882bdde0e51d3be5516683df5e2e7}\index{main.c@{main.c}!StartUARTprint@{StartUARTprint}}
+\index{StartUARTprint@{StartUARTprint}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartUARTprint()}{StartUARTprint()}}
+{\footnotesize\ttfamily \label{main_8c_a56c882bdde0e51d3be5516683df5e2e7} 
+void Start\+UARTprint (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Thread function for UART print. 
+
+This function implements the UARTprint thread. It continuously waits for a character string from the UART output message queue, then transmits the received buffer over the UART. A short delay is added in each loop iteration to yield control.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
+\index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily \label{main_8c_a70af21c671abfcc773614a9a4f63d920} 
+void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Initializes the RCC Oscillators according to the specified parameters in the RCC\+\_\+\+Osc\+Init\+Type\+Def structure.
+
+Initializes the CPU, AHB and APB buses clocks
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8c_ab9a20a076e598f1ad6eb2980f973f9ec}\index{main.c@{main.c}!console\_attributes@{console\_attributes}}
+\index{console\_attributes@{console\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{console\_attributes}{console\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_ab9a20a076e598f1ad6eb2980f973f9ec} 
+const os\+Semaphore\+Attr\+\_\+t console\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}console"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a950050654f827009fc061484b2a4f156}\index{main.c@{main.c}!EpaperPrint\_attributes@{EpaperPrint\_attributes}}
+\index{EpaperPrint\_attributes@{EpaperPrint\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EpaperPrint\_attributes}{EpaperPrint\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a950050654f827009fc061484b2a4f156} 
+const os\+Thread\+Attr\+\_\+t Epaper\+Print\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}EpaperPrint"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 256\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityLow,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a2bc3c3b713d64a2db2aac34b83c153e3}\index{main.c@{main.c}!EpaperStatus2\_attributes@{EpaperStatus2\_attributes}}
+\index{EpaperStatus2\_attributes@{EpaperStatus2\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EpaperStatus2\_attributes}{EpaperStatus2\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a2bc3c3b713d64a2db2aac34b83c153e3} 
+const os\+Message\+Queue\+Attr\+\_\+t Epaper\+Status2\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}EpaperStatus2"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a300ac6eac54c89a5eddb561c2fef45d4}\index{main.c@{main.c}!EpaperStatus3\_attributes@{EpaperStatus3\_attributes}}
+\index{EpaperStatus3\_attributes@{EpaperStatus3\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EpaperStatus3\_attributes}{EpaperStatus3\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a300ac6eac54c89a5eddb561c2fef45d4} 
+const os\+Message\+Queue\+Attr\+\_\+t Epaper\+Status3\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}EpaperStatus3"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_acec6f5934d6b412b443238acbf35dca5}\index{main.c@{main.c}!EpaperStatus\_attributes@{EpaperStatus\_attributes}}
+\index{EpaperStatus\_attributes@{EpaperStatus\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EpaperStatus\_attributes}{EpaperStatus\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_acec6f5934d6b412b443238acbf35dca5} 
+const os\+Message\+Queue\+Attr\+\_\+t Epaper\+Status\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}EpaperStatus"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_ab472a0977b92a7f30ba53a7837d35750}\index{main.c@{main.c}!Heartbeat\_attributes@{Heartbeat\_attributes}}
+\index{Heartbeat\_attributes@{Heartbeat\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{Heartbeat\_attributes}{Heartbeat\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_ab472a0977b92a7f30ba53a7837d35750} 
+const os\+Thread\+Attr\+\_\+t Heartbeat\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}Heartbeat"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 256\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityLow,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_ace743ecc08f32d2c0021095789a79865}\index{main.c@{main.c}!UARTin\_attributes@{UARTin\_attributes}}
+\index{UARTin\_attributes@{UARTin\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{UARTin\_attributes}{UARTin\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_ace743ecc08f32d2c0021095789a79865} 
+const os\+Message\+Queue\+Attr\+\_\+t UARTin\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}UARTin"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_af4710774e4990fa034f5cf88781405cf}\index{main.c@{main.c}!UARTinput\_attributes@{UARTinput\_attributes}}
+\index{UARTinput\_attributes@{UARTinput\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{UARTinput\_attributes}{UARTinput\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_af4710774e4990fa034f5cf88781405cf} 
+const os\+Thread\+Attr\+\_\+t UARTinput\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}UARTinput"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 256\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityLow,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a784289f8ae7e5f4c9f97fe774568a0ba}\index{main.c@{main.c}!UARTout\_attributes@{UARTout\_attributes}}
+\index{UARTout\_attributes@{UARTout\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{UARTout\_attributes}{UARTout\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a784289f8ae7e5f4c9f97fe774568a0ba} 
+const os\+Message\+Queue\+Attr\+\_\+t UARTout\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}UARTout"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a0dbad06ad7948e0d6d85545c6602b091}\index{main.c@{main.c}!UARTprint\_attributes@{UARTprint\_attributes}}
+\index{UARTprint\_attributes@{UARTprint\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{UARTprint\_attributes}{UARTprint\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a0dbad06ad7948e0d6d85545c6602b091} 
+const os\+Thread\+Attr\+\_\+t UARTprint\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}UARTprint"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 256\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityLow,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_afe91bcf3d393740fb06dc07d99ef2a2a}\index{main.c@{main.c}!uptime\_attributes@{uptime\_attributes}}
+\index{uptime\_attributes@{uptime\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{uptime\_attributes}{uptime\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_afe91bcf3d393740fb06dc07d99ef2a2a} 
+const os\+Message\+Queue\+Attr\+\_\+t uptime\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}uptime"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

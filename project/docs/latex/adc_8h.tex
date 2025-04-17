@@ -1,0 +1,110 @@
+\doxysection{/home/user/\+Desktop/ense481\+Matthew\+Ross200265265/project/hotplate\+\_\+final/\+Core/\+Inc/adc.h File Reference}
+\hypertarget{adc_8h}{}\label{adc_8h}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/adc.h@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/adc.h}}
+
+
+ADC conversion and configuration functions.  
+
+
+{\ttfamily \#include "{}stdint.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{adc_8h_af457592e93b296e5ea12f1cc16ec7795}{get\+Temp}} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves the temperature measurement. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{adc_8h_a367f9facc2a6962a21866570bae9a5f1}{get\+Volt}} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves the supply voltage (VDD) measurement. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{adc_8h_a23420fb9ec2269ea34b5cf8bbb952f98}{adc\+\_\+config\+\_\+temp}} (void)
+\begin{DoxyCompactList}\small\item\em Configures the ADC channels for temperature measurement. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{adc_8h_ad4fc79276604db6600a3936d6c49b9b1}{adc\+\_\+config\+\_\+vref}} (void)
+\begin{DoxyCompactList}\small\item\em Configures the ADC channels for internal reference voltage measurement. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{adc_8h_af5fe3cef8c7d431335c860a205c91ac7}{adc\+\_\+sample}} (uint32\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em Performs an ADC conversion on a specified channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ADC conversion and configuration functions. 
+
+This header file declares functions for configuring the ADC, sampling channels, and converting ADC readings to temperature and voltage values.
+
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{adc_8h_a23420fb9ec2269ea34b5cf8bbb952f98}\index{adc.h@{adc.h}!adc\_config\_temp@{adc\_config\_temp}}
+\index{adc\_config\_temp@{adc\_config\_temp}!adc.h@{adc.h}}
+\doxysubsubsection{\texorpdfstring{adc\_config\_temp()}{adc\_config\_temp()}}
+{\footnotesize\ttfamily \label{adc_8h_a23420fb9ec2269ea34b5cf8bbb952f98} 
+void adc\+\_\+config\+\_\+temp (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Configures the ADC channels for temperature measurement. 
+
+This function sets the ADC channel for the temperature sensor as the active conversion channel and disables the internal reference voltage channel. \Hypertarget{adc_8h_ad4fc79276604db6600a3936d6c49b9b1}\index{adc.h@{adc.h}!adc\_config\_vref@{adc\_config\_vref}}
+\index{adc\_config\_vref@{adc\_config\_vref}!adc.h@{adc.h}}
+\doxysubsubsection{\texorpdfstring{adc\_config\_vref()}{adc\_config\_vref()}}
+{\footnotesize\ttfamily \label{adc_8h_ad4fc79276604db6600a3936d6c49b9b1} 
+void adc\+\_\+config\+\_\+vref (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Configures the ADC channels for internal reference voltage measurement. 
+
+This function sets the ADC channel for the internal reference voltage as the active conversion channel and disables the temperature sensor channel. \Hypertarget{adc_8h_af5fe3cef8c7d431335c860a205c91ac7}\index{adc.h@{adc.h}!adc\_sample@{adc\_sample}}
+\index{adc\_sample@{adc\_sample}!adc.h@{adc.h}}
+\doxysubsubsection{\texorpdfstring{adc\_sample()}{adc\_sample()}}
+{\footnotesize\ttfamily \label{adc_8h_af5fe3cef8c7d431335c860a205c91ac7} 
+uint16\+\_\+t adc\+\_\+sample (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{channel}{}\end{DoxyParamCaption})}
+
+
+
+Performs an ADC conversion on a specified channel. 
+
+This function starts the ADC conversion on the provided channel, waits (blocking) for the conversion to complete, retrieves the ADC value using HAL functions, stops the conversion, and returns the raw value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & The ADC channel to be sampled.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The raw ADC conversion result as a 16-\/bit unsigned integer. 
+\end{DoxyReturn}
+\Hypertarget{adc_8h_af457592e93b296e5ea12f1cc16ec7795}\index{adc.h@{adc.h}!getTemp@{getTemp}}
+\index{getTemp@{getTemp}!adc.h@{adc.h}}
+\doxysubsubsection{\texorpdfstring{getTemp()}{getTemp()}}
+{\footnotesize\ttfamily \label{adc_8h_af457592e93b296e5ea12f1cc16ec7795} 
+float get\+Temp (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the temperature measurement. 
+
+This function reads the built-\/in temperature sensor by taking 100 consecutive ADC samples. For each sample, it configures the ADC for temperature measurement, reads the ADC value, converts that value to a voltage using the current supply voltage, and computes the temperature in degrees Celsius via a calibration formula.
+
+\begin{DoxyReturn}{Returns}
+The averaged temperature in degrees Celsius. 
+\end{DoxyReturn}
+\Hypertarget{adc_8h_a367f9facc2a6962a21866570bae9a5f1}\index{adc.h@{adc.h}!getVolt@{getVolt}}
+\index{getVolt@{getVolt}!adc.h@{adc.h}}
+\doxysubsubsection{\texorpdfstring{getVolt()}{getVolt()}}
+{\footnotesize\ttfamily \label{adc_8h_a367f9facc2a6962a21866570bae9a5f1} 
+float get\+Volt (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the supply voltage (VDD) measurement. 
+
+This function configures the ADC for measuring the internal reference voltage, performs a single-\/channel ADC sample, and computes the supply voltage (VDD) using a calibration value. If the ADC sample is zero, the function returns 0 to avoid division by zero.
+
+\begin{DoxyReturn}{Returns}
+The measured supply voltage in volts. 
+\end{DoxyReturn}

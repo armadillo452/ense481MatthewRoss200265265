@@ -1,19 +1,31 @@
 /* USER CODE BEGIN Header */
 /**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
+ * @file main.c
+ * @brief Main entry point and application control.
  *
- * Copyright (c) 2025 STMicroelectronics.
- * All rights reserved.
+ * This file serves as the primary entry point for the application. It is responsible for:
+ * - Initializing hardware and peripherals (e.g., UART, ADC, timers, GPIOs).
+ * - Setting up the operating system (e.g., thread creation, message queues, semaphores).
+ * - Providing callbacks for hardware interrupts and timer events.
+ * - Launching the main application loops and managing system tasks such as heartbeat,
+ *   e-paper display updates, and UART communication.
  *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
+ * The application is developed for an STM32 microcontroller using CubeIDE. It integrates
+ * multiple modules, including CLI for user interaction, ADC for sensor readings, e-paper display
+ * for output, and a simple neural control for managing heater duty cycles.
  *
- ******************************************************************************
+ * @note Ensure that all peripheral initializations and system tasks are appropriately
+ *       configured before entering the main loop.
+ *
+ * Hardware connections:
+ * - **Left Button:** GPIO (PA4)
+ * - **Right Button:** GPIO (PA1)
+ * - **GND:** Ground
+ *
+ * @author Matthew Ross 200265265
+ *
+ * @version 1.0
+ * @date    17apr2025
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
@@ -45,6 +57,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+
+IWDG_HandleTypeDef hiwdg;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
@@ -112,21 +126,21 @@ osMessageQueueId_t EpaperStatus3Handle;
 const osMessageQueueAttr_t EpaperStatus3_attributes = {
   .name = "EpaperStatus3"
 };
-/* Definitions for EpaperStatus4 */
-osMessageQueueId_t EpaperStatus4Handle;
-const osMessageQueueAttr_t EpaperStatus4_attributes = {
-  .name = "EpaperStatus4"
+/* Definitions for console */
+osSemaphoreId_t consoleHandle;
+const osSemaphoreAttr_t console_attributes = {
+  .name = "console"
 };
 /* USER CODE BEGIN PV */
 
 uint8_t input;                // Store received character
-uint32_t uptime = 0;          // Store uptime counter
+uint8_t uptime = 0;           // Store uptime counter
+uint8_t minutes = 0;          // Store uptime minutes counter
+uint8_t hours = 0;            // Store uptime hours counter
+uint16_t days = 0;            // Store uptime days counter
 uint8_t target = 0;           // Hotplate target temperature
-uint8_t button1_held = 0;
-uint8_t button4_held = 0;
-uint32_t button1_press_time = 0;
-uint32_t button4_press_time = 0;
 extern uint8_t image_bw[EPD_W_BUFF_SIZE * EPD_H];
+extern uint8_t clearPaper;
 
 /* USER CODE END PV */
 
@@ -139,6 +153,7 @@ static void MX_ADC1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_IWDG_Init(void);
 void StartUARTprint(void *argument);
 void StartUARTinput(void *argument);
 void StartHeartbeat(void *argument);
@@ -188,6 +203,7 @@ int main(void)
   MX_SPI1_Init();
   MX_SPI2_Init();
   MX_TIM3_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -196,23 +212,27 @@ int main(void)
   osKernelInitialize();
 
   /* USER CODE BEGIN RTOS_MUTEX */
-	/* add mutexes, ... */
+  /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
+  /* Create the semaphores(s) */
+  /* creation of console */
+  consoleHandle = osSemaphoreNew(1, 1, &console_attributes);
+
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-	/* add semaphores, ... */
+  /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-	/* start timers, add new ones, ... */
+  /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the queue(s) */
   /* creation of UARTin */
-  UARTinHandle = osMessageQueueNew (10, sizeof(uint8_t), &UARTin_attributes);
+  UARTinHandle = osMessageQueueNew (11, sizeof(uint8_t), &UARTin_attributes);
 
   /* creation of UARTout */
-  UARToutHandle = osMessageQueueNew (10, 128, &UARTout_attributes);
+  UARToutHandle = osMessageQueueNew (12, 128, &UARTout_attributes);
 
   /* creation of uptime */
   uptimeHandle = osMessageQueueNew (1, sizeof(uint32_t), &uptime_attributes);
@@ -226,11 +246,8 @@ int main(void)
   /* creation of EpaperStatus3 */
   EpaperStatus3Handle = osMessageQueueNew (1, 64, &EpaperStatus3_attributes);
 
-  /* creation of EpaperStatus4 */
-  EpaperStatus4Handle = osMessageQueueNew (1, 64, &EpaperStatus4_attributes);
-
   /* USER CODE BEGIN RTOS_QUEUES */
-	/* add queues, ... */
+  /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -247,11 +264,11 @@ int main(void)
   EpaperPrintHandle = osThreadNew(StartEpaperPrint, NULL, &EpaperPrint_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-	/* add threads, ... */
+  /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
-	/* add events, ... */
+  /* add events, ... */
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
@@ -261,11 +278,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1) {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+  }
   /* USER CODE END 3 */
 }
 
@@ -282,10 +299,11 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
@@ -359,6 +377,34 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
+  hiwdg.Init.Reload = 2500;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
 
 }
 
@@ -478,7 +524,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM2_Init 2 */
-	HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END TIM2_Init 2 */
 
 }
@@ -505,7 +551,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 63999;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 249;
+  htim3.Init.Period = 499;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -570,7 +616,7 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-	HAL_UART_Receive_IT(&huart2, &input, 1); // Start listening for interrupt
+  HAL_UART_Receive_IT(&huart2, &input, 1); // Start listening for interrupt
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -607,7 +653,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : RightButton_Pin LeftButton_Pin */
   GPIO_InitStruct.Pin = RightButton_Pin|LeftButton_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -648,148 +694,184 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+ * @brief UART Reception Complete Callback.
+ *
+ * This callback is invoked by the HAL when a complete UART reception interrupt occurs.
+ * When the function is called with a UART handle corresponding to USART2, it places the
+ * received character (stored in a global variable, e.g. `input`) into the UART input
+ * message queue, then reinitiates the UART reception interrupt.
+ *
+ * @param huart Pointer to the UART handle structure.
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	if (huart->Instance == USART2) {
-		osMessageQueuePut(UARTinHandle, &input, 0, 0); // Send received character to the queue
-		HAL_UART_Receive_IT(&huart2, &input, 1); // Reset interrupt
-	}
+  if (huart->Instance == USART2) {
+    osMessageQueuePut(UARTinHandle, &input, 0, 0); // Send received character to the queue
+    HAL_UART_Receive_IT(&huart2, &input, 1); // Reset interrupt
+  }
 }
 
+/**
+ * @brief GPIO EXTI (External Interrupt) Callback.
+ *
+ * This callback is triggered when an external GPIO interrupt occurs. This example uses
+ * interrupts on specific pins to adjust a target value. If the interrupt is from GPIO_PIN_1
+ * the target is increased by 10°C. Conversely, for GPIO_PIN_4, the target is
+ * decreased by 10°C.
+ *
+ * @param GPIO_Pin The pin number that generated the interrupt.
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (GPIO_Pin == GPIO_PIN_1) {
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) == GPIO_PIN_RESET) {
-			button1_press_time = HAL_GetTick();
-			button1_held = 1; // Button pressed
-		} else {
-			uint32_t press_duration = HAL_GetTick() - button1_press_time;
-			button1_held = 0;
-			if (press_duration < 2000 && target <= 254) {
-				target += 1;
-			}
-		}
-	} else if (GPIO_Pin == GPIO_PIN_4) {
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
-			button4_press_time = HAL_GetTick();
-			button4_held = 1; // Button pressed
-		} else {
-			uint32_t press_duration = HAL_GetTick() - button4_press_time;
-			button4_held = 0;
-			if ((target != 0) && (press_duration < 2000)) {
-				target -= 1;
-			}
-		}
-	}
-	if (GPIO_Pin == GPIO_PIN_13) { // Button press interrupt
-		myprintf("blue\r\n>> ");
-	}
+  if (GPIO_Pin == GPIO_PIN_1) {
+    if (target <= 240)
+      target += 10;
+  } else if (GPIO_Pin == GPIO_PIN_4) {
+    if ((target >= 10))
+      target -= 10;
+  }
+//	if (GPIO_Pin == GPIO_PIN_13) { // Button press interrupt
+//		myprintf("\r\n  You pressed the blue button.\r\n>> ");
+//	}
 }
 
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartUARTprint */
+
 /**
- * @brief Function implementing the UARTprint thread.
- * @param argument: Not used
- * @retval None
+ * @brief Thread function for UART print.
+ *
+ * This function implements the UARTprint thread. It continuously waits for a character
+ * string from the UART output message queue, then transmits the received buffer over the UART.
+ * A short delay is added in each loop iteration to yield control.
+ *
+ * @param argument Not used.
+ * @retval None.
  */
 /* USER CODE END Header_StartUARTprint */
 void StartUARTprint(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	char buffer[128]; // Buffer for console print
-	/* Infinite loop */
-	for (;;) {
-		if (osMessageQueueGet(UARToutHandle, &buffer, NULL, osWaitForever)
-				== osOK) // Wait for a character from the queue
-			HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer),
-			HAL_MAX_DELAY); // Transmit buffer over UART
-		osDelay(1);
-	}
+  char buffer[128]; // Buffer for console print
+  /* Infinite loop */
+  for (;;) {
+    if (osMessageQueueGet(UARToutHandle, &buffer, NULL, osWaitForever) == osOK) // Wait for a character from the queue
+      HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer),
+      HAL_MAX_DELAY); // Transmit buffer over UART
+    osDelay(1);
+  }
   /* USER CODE END 5 */
 }
 
 /* USER CODE BEGIN Header_StartUARTinput */
+
 /**
- * @brief Function implementing the UARTinput thread.
- * @param argument: Not used
- * @retval None
+ * @brief Thread function for UART input.
+ *
+ * This function implements the UARTinput thread. It continuously waits for a received
+ * character from the UART input message queue and then passes that character to the
+ * console_UART() function for processing.
+ *
+ * @param argument Not used.
+ * @retval None.
  */
 /* USER CODE END Header_StartUARTinput */
 void StartUARTinput(void *argument)
 {
   /* USER CODE BEGIN StartUARTinput */
-	uint8_t input;
-	/* Infinite loop */
-	for (;;) {
-		if (osMessageQueueGet(UARTinHandle, &input, NULL, osWaitForever)
-				== osOK) // Wait for a character from the queue
-			console_UART(input);
-		osDelay(1);
-	}
+  uint8_t input;
+  /* Infinite loop */
+  for (;;) {
+    if (osMessageQueueGet(UARTinHandle, &input, NULL, osWaitForever) == osOK) // Wait for a character from the queue
+      console_UART(input);
+    osDelay(1);
+  }
   /* USER CODE END StartUARTinput */
 }
 
 /* USER CODE BEGIN Header_StartHeartbeat */
+
 /**
- * @brief Function implementing the Heartbeat thread.
- * @param argument: Not used
- * @retval None
+ * @brief Thread function for system heartbeat.
+ *
+ * This function implements the Heartbeat thread. On startup, it acquires a semaphore
+ * to safely update and display the system status. It then starts the PWM for controlling
+ * the hotplate output. Inside the main loop, it waits for an uptime value from a message queue
+ * and calls the heartbeat() function to update the system’s heartbeat routine.
+ *
+ * @param argument Not used.
+ * @retval None.
  */
 /* USER CODE END Header_StartHeartbeat */
 void StartHeartbeat(void *argument)
 {
   /* USER CODE BEGIN StartHeartbeat */
-	uint32_t uptime;
-	status(); // Clear all and draw status window
-	/* Infinite loop */
-	for (;;) {
-		if (osMessageQueueGet(uptimeHandle, &uptime, NULL, osWaitForever)
-				== osOK) // Wait for uptime from the queue
-			heartbeat(uptime);
-		osDelay(1);
-	}
+  uint32_t uptime;
+  if (osSemaphoreAcquire(consoleHandle, osWaitForever) == osOK) {
+    status(); // Clear all and draw status window
+    myprintf(">> ");
+    osSemaphoreRelease(consoleHandle);
+  }
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3); // Hotplate output
+  /* Infinite loop */
+  for (;;) {
+    if (osMessageQueueGet(uptimeHandle, &uptime, NULL, osWaitForever) == osOK) // Wait for uptime from the queue
+      heartbeat();
+    osDelay(1);
+  }
   /* USER CODE END StartHeartbeat */
 }
 
 /* USER CODE BEGIN Header_StartEpaperPrint */
+
 /**
- * @brief Function implementing the EpaperPrint thread.
- * @param argument: Not used
- * @retval None
+ * @brief Thread function for updating the e-paper display.
+ *
+ * This function implements the EpaperPrint thread. It first checks whether the e-paper needs to
+ * be cleared (using the flag `clearPaper`) and initializes it if required. Then, it waits for
+ * status messages from three separate message queues to update different sections of the e-paper.
+ * After updating the image buffer, it issues a partial update command so that only changed content is redrawn.
+ *
+ * @param argument Not used.
+ * @retval None.
  */
 /* USER CODE END Header_StartEpaperPrint */
 void StartEpaperPrint(void *argument)
 {
   /* USER CODE BEGIN StartEpaperPrint */
 //	osDelay(100);
-	char displayBuffer[64]; // Buffer for formatted output to epaper
-	epaper_start(); // Clear and init the epaper
-	/* Infinite loop */
-	for (;;) {
-		if (osMessageQueueGet(EpaperStatusHandle, displayBuffer, NULL,
-		osWaitForever) == osOK)
-			epd_paint_showString(0, 20, (uint8_t*) displayBuffer,
-			EPD_FONT_SIZE8x6,
-			EPD_COLOR_BLACK); // Status for VDD, chip temp, and uptime
-		if (osMessageQueueGet(EpaperStatus2Handle, displayBuffer, NULL,
-		osWaitForever) == osOK)
-			epd_paint_showString(0, 40, (uint8_t*) displayBuffer,
-			EPD_FONT_SIZE16x8,
-			EPD_COLOR_BLACK); // Status for target and now temp
-		epd_displayBW_partial(image_bw); // Print to the epaper
-		osDelay(1);
-	}
+  char displayBuffer[64]; // Buffer for formatted output to epaper
+  /* Infinite loop */
+  for (;;) {
+    if (clearPaper == 1) {
+      epaper_start();
+      clearPaper = 0;
+    }
+    if (osMessageQueueGet(EpaperStatusHandle, displayBuffer, NULL, osWaitForever) == osOK)
+      epd_paint_showString(4, 42, (uint8_t*) displayBuffer, EPD_FONT_SIZE8x6, EPD_COLOR_BLACK); // Status for VDD, chip temp, and uptime
+    if (osMessageQueueGet(EpaperStatus2Handle, displayBuffer, NULL, osWaitForever) == osOK)
+      epd_paint_showString(4, 62, (uint8_t*) displayBuffer, EPD_FONT_SIZE24x12, EPD_COLOR_BLACK); // Status for target and now temp
+    if (osMessageQueueGet(EpaperStatus3Handle, displayBuffer, NULL, osWaitForever) == osOK)
+      epd_paint_showString(4, 86, (uint8_t*) displayBuffer, EPD_FONT_SIZE24x12, EPD_COLOR_BLACK); // Status for heater
+
+    epd_displayBW_partial(image_bw); // Print to the epaper
+    osDelay(1);
+  }
   /* USER CODE END StartEpaperPrint */
 }
 
 /**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
+ * @brief Timer period elapsed callback.
+ *
+ * This callback is invoked by the HAL when a timer period elapses.
+ * When TIM1 generates an interrupt, the system tick is incremented via HAL_IncTick().
+ * Additionally, when TIM2 generates an interrupt, the uptime counter is incremented, and
+ * time-related variables (uptime, minutes, hours, days) are updated accordingly. Finally, the updated
+ * uptime is sent to a message queue for further processing.
+ *
+ * @param htim Pointer to the TIM handle structure.
+ * @retval None.
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
@@ -800,10 +882,22 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-	if (htim->Instance == TIM2) {
-		uptime++;
-		osMessageQueuePut(uptimeHandle, &uptime, 0, 0); // Send uptime to the queue
-	}
+  if (htim->Instance == TIM2) {
+    uptime++; // Half-second ticks
+    if (uptime == 120) {
+      uptime = 0;
+      minutes++;
+    }
+    if (minutes == 60) {
+      minutes = 0;
+      hours++;
+    }
+    if (hours == 24) {
+      hours = 0;
+      days++;
+    }
+    osMessageQueuePut(uptimeHandle, &uptime, 0, 0); // Send uptime to the queue
+  }
   /* USER CODE END Callback 1 */
 }
 
@@ -814,10 +908,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
-	__disable_irq();
-	while (1) {
-	}
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1) {
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 

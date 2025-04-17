@@ -1,0 +1,78 @@
+\doxysection{/home/user/\+Desktop/ense481\+Matthew\+Ross200265265/project/hotplate\+\_\+final/\+Core/\+Inc/epaper\+\_\+ctl.h File Reference}
+\hypertarget{epaper__ctl_8h}{}\label{epaper__ctl_8h}\index{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/epaper\_ctl.h@{/home/user/Desktop/ense481MatthewRoss200265265/project/hotplate\_final/Core/Inc/epaper\_ctl.h}}
+
+
+Functions for controlling and updating the e-\/paper display.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{epaper__ctl_8h_a8bba4ba49ad863a19ac7b88c238a910c}{epaper\+\_\+start}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes the e-\/paper display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epaper__ctl_8h_aa5663759dc6012f94290535340d0b942}{epaper\+\_\+clear\+\_\+initial}} (void)
+\begin{DoxyCompactList}\small\item\em Performs an initial clear of the e-\/paper display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{epaper__ctl_8h_a9e6a828e4939a920585ab15c1456e99b}{epaper\+\_\+status}} (void)
+\begin{DoxyCompactList}\small\item\em Displays status framework on the e-\/paper. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for controlling and updating the e-\/paper display. 
+
+This header declares functions to initialize the e-\/paper display, clear it initially, and show the display status.
+
+\begin{DoxyNote}{Note}
+Hardware connections\+:
+\begin{DoxyItemize}
+\item {\bfseries{RES\+:}} GPIO (PB5) Reset
+\item {\bfseries{BUSY\+:}} GPIO (PB4)
+\item {\bfseries{D/C\+:}} GPIO (PB3) Data/\+Command
+\item {\bfseries{CS\+:}} GPIO (PB1) Chip Select
+\item {\bfseries{SCK\+:}} SPI2\+\_\+\+SCK (PB13)
+\item {\bfseries{MOSI\+:}} SPI2\+\_\+\+MOSI (PB15)
+\item {\bfseries{VDD\+:}} VDD – 3.\+3V or 5V
+\end{DoxyItemize}
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Matthew Ross 200265265
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+17apr2025 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{epaper__ctl_8h_aa5663759dc6012f94290535340d0b942}\index{epaper\_ctl.h@{epaper\_ctl.h}!epaper\_clear\_initial@{epaper\_clear\_initial}}
+\index{epaper\_clear\_initial@{epaper\_clear\_initial}!epaper\_ctl.h@{epaper\_ctl.h}}
+\doxysubsubsection{\texorpdfstring{epaper\_clear\_initial()}{epaper\_clear\_initial()}}
+{\footnotesize\ttfamily \label{epaper__ctl_8h_aa5663759dc6012f94290535340d0b942} 
+void epaper\+\_\+clear\+\_\+initial (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Performs an initial clear of the e-\/paper display. 
+
+This function prepares a new image buffer, selects it for drawing, clears the image to white, and sends it to the display. It is typically called during the startup sequence. \Hypertarget{epaper__ctl_8h_a8bba4ba49ad863a19ac7b88c238a910c}\index{epaper\_ctl.h@{epaper\_ctl.h}!epaper\_start@{epaper\_start}}
+\index{epaper\_start@{epaper\_start}!epaper\_ctl.h@{epaper\_ctl.h}}
+\doxysubsubsection{\texorpdfstring{epaper\_start()}{epaper\_start()}}
+{\footnotesize\ttfamily \label{epaper__ctl_8h_a8bba4ba49ad863a19ac7b88c238a910c} 
+void epaper\+\_\+start (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the e-\/paper display. 
+
+This function performs the initial setup of the e-\/paper display. It calls the main e-\/paper initialization routine, clears the display, configures partial update mode, and then displays the current status on the e-\/paper. \Hypertarget{epaper__ctl_8h_a9e6a828e4939a920585ab15c1456e99b}\index{epaper\_ctl.h@{epaper\_ctl.h}!epaper\_status@{epaper\_status}}
+\index{epaper\_status@{epaper\_status}!epaper\_ctl.h@{epaper\_ctl.h}}
+\doxysubsubsection{\texorpdfstring{epaper\_status()}{epaper\_status()}}
+{\footnotesize\ttfamily \label{epaper__ctl_8h_a9e6a828e4939a920585ab15c1456e99b} 
+void epaper\+\_\+status (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Displays status framework on the e-\/paper. 
+
+This function writes a series of strings on the e-\/paper display to form framework and formatting. 
